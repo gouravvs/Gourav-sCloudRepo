@@ -1,0 +1,192 @@
+# Cloud SQL SQL Server 2019 to 2022 Upgrade Procedure
+
+Author: Gourav
+
+## Prerequisites
+
+* A Terraform configuration/repository already exists for Cloud SQL instance creation.
+* Source instance (`app-dev`) is running SQL Server 2019.
+* Clone instance (`app-dev-clone`) is already created using the Terraform scripts from the `create-new-instance` repository.
+* `gcloud` SDK is installed and authenticated.
+* Required IAM permissions are available for Cloud SQL backup and restore operations.
+
+---
+
+# Upgrade Strategy
+
+The source SQL Server 2019 instance contains the production data.
+To perform a major version upgrade with minimal risk:
+
+1. Take an on-demand backup of the source instance.
+2. Restore the backup to a separate clone instance.
+3. Perform an in-place upgrade on the clone instance using Terraform.
+4. Validate the upgraded environment.
+
+---
+
+# Clone / Restore Procedure
+
+## 1. Create an On-Demand Backup
+
+Run the following command:
+
+```bash
+gcloud sql backups create --instance=app-dev
+```
+
+---
+
+## 2. Validate Backup Completion
+
+List available backups:
+
+```bash
+gcloud sql backups list --instance=app-dev
+```
+
+Describe a specific backup:
+
+```bash
+gcloud sql backups describe BACKUP_ID --instance=app-dev
+```
+
+Verify that the backup status is `SUCCESSFUL`.
+
+---
+
+## 3. Restore Backup to Clone Instance
+
+Restore the backup to the clone instance using:
+
+```bash
+gcloud sql backups restore BACKUP_ID \
+    --restore-instance=app-dev-clone \
+    --backup-instance=app-dev
+```
+
+Example:
+
+```bash
+gcloud sql backups restore 1779787260331 \
+    --restore-instance=app-dev-clone \
+    --backup-instance=app-dev
+```
+
+---
+
+## 4. Validate Restore
+
+After restore completion:
+
+* Connect to the Cloud SQL clone instance.
+* Validate:
+
+  * Databases
+  * Logins
+  * SQL Agent jobs (if applicable)
+  * Data consistency
+  * Application connectivity
+
+---
+
+# In-Place Upgrade Using Terraform
+
+## 1. Modify Terraform Configuration
+
+Open the Terraform configuration (`main2022.tf`) for the clone instance.
+
+Change only the `database_version` parameter.
+
+Example:
+
+Current:
+
+```
+database_version = "SQLSERVER_2019_EXPRESS"
+```
+
+Updated:
+
+```
+database_version = "SQLSERVER_2022_EXPRESS"
+```
+
+Do not modify any other parameters during the upgrade activity.
+
+---
+
+## 2. Validate Terraform Plan
+
+Run:
+
+```bash
+terraform plan
+```
+
+Validate that Terraform shows an in-place update similar to:
+
+```diff
+~ database_version = "SQLSERVER_2019_EXPRESS" -> "SQLSERVER_2022_EXPRESS"
+```
+
+Ensure Terraform does NOT show:
+
+```diff
+-/+ resource will be replaced
+```
+
+If resource replacement is shown, stop and review the Terraform configuration.
+
+---
+
+## 3. Apply Upgrade
+
+Run:
+
+```bash
+terraform apply
+```
+
+The Cloud SQL instance upgrade operation should appear as:
+
+```text
+update-in-place
+```
+
+---
+
+# Post Upgrade Validation
+
+After upgrade completion:
+
+## Verify Cloud SQL Version
+
+```bash
+gcloud sql instances describe app-dev-clone
+```
+
+Verify:
+
+```text
+databaseVersion: SQLSERVER_2022_*
+```
+
+---
+
+## Verify SQL Server Version
+
+Connect to SQL Server and run:
+
+```sql
+SELECT @@VERSION;
+```
+
+---
+
+# Important Notes
+
+* Major version upgrade causes downtime/restart.
+* Take backups before performing the upgrade.
+* Perform validation before promoting the upgraded instance for production use.
+* Recommended to test application connectivity and functionality after upgrade.
+
