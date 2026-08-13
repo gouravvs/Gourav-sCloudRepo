@@ -6,7 +6,8 @@ Author: Gourav
 
 * A Terraform configuration/repository already exists for Cloud SQL instance creation.
 * Source instance (`app-dev`) is running SQL Server 2019.
-* Clone instance (`app-dev-clone`) is already created using the Terraform scripts from the `create-new-instance` repository.
+* Clone instance (`app-dev-clone`)should be created using the Terraform scripts from the `create-new-instance` repository.
+    Note: Make sure you create a new main-clone.tf file in the same repo and follow same steps to create a clone instance , dont touch existing main.tf file through which source is created.
 * `gcloud` SDK is installed and authenticated.
 * Required IAM permissions are available for Cloud SQL backup and restore operations.
 

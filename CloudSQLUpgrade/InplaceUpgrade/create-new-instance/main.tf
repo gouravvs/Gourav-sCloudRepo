@@ -1,4 +1,4 @@
-resource "google_sql_database_instance" "mssql2019" {
+resource "google_sql_database_instance" "app-dev" {
 
   name             = "app-dev"
   region           = "asia-south2"

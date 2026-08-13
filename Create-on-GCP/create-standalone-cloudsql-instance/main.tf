@@ -1,17 +1,17 @@
-resource "google_sql_database_instance" "mssql2022" {
+resource "google_sql_database_instance" "app-uat" {
 
-  name             = "app-dev-clone"
+  name             = "app-uat"
   region           = "asia-south2"
-  database_version = "SQLSERVER_2022_EXPRESS"
+  database_version = "SQLSERVER_2022_ENTERPRISE"
   root_password = "123!"
 
   deletion_protection = false
 
   settings {
 
-    tier              = "db-custom-1-3840"
+    tier              = "db-custom-2-4096"
     edition           = "ENTERPRISE"
-    availability_type = "ZONAL"
+    availability_type = "REGIONAL"
 
     disk_type         = "PD_SSD"
     disk_size         = 10
@@ -56,7 +56,7 @@ resource "google_sql_database_instance" "mssql2022" {
 
       authorized_networks {
         name  = "dxc"
-        value = "223.235.102.0/24"
+        value = "223.235.98.0/24"
       }
     }
 

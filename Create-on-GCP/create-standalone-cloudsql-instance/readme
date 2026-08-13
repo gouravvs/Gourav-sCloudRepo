@@ -1,0 +1,101 @@
+# Create Cloud SQL Instance Using Terraform
+
+Author: Gourav
+
+This repository contains Terraform scripts to create a new Google Cloud SQL instance.
+
+---
+
+## Files Description
+
+### main.tf
+The primary Terraform configuration file containing the Cloud SQL instance resource configuration.
+
+### variables.tf
+Contains all variable declarations used in the Terraform scripts.
+
+### terraform.tfvars
+Contains values for variables such as:
+- Project ID
+- Region
+- Instance name
+- Other configurable parameters
+
+### provider.tf
+Contains the Google Cloud provider configuration used by Terraform.
+
+---
+
+## Prerequisites
+
+Before running the Terraform scripts, ensure:
+
+- Terraform is installed
+- Google Cloud SDK (`gcloud`) is installed
+- You are authenticated to GCP
+- Required APIs are enabled
+- Required IAM permissions are assigned
+
+---
+
+## Steps to Deploy
+
+### 1. Update Configuration
+
+Modify the `main.tf` and `terraform.tfvars` files according to your requirements.
+
+---
+
+### 2. Initialize Terraform
+
+```bash
+terraform init
+```
+
+This initializes the Terraform working directory and downloads required provider plugins.
+
+---
+
+### 3. Validate Terraform Configuration
+
+```bash
+terraform validate
+```
+
+This validates the Terraform configuration files.
+
+---
+
+### 4. Review Execution Plan
+
+```bash
+terraform plan
+```
+
+This displays the resources Terraform will create or modify.
+
+---
+
+### 5. Apply the Configuration
+
+```bash
+terraform apply
+```
+
+Type `yes` when prompted.
+
+Terraform will begin creating the Cloud SQL instance.
+
+---
+
+## Verify Deployment
+
+After successful deployment, verify the instance using:
+
+```bash
+gcloud sql instances list
+```
+
+Or check the Google Cloud Console.
+
+----------------------------------------
