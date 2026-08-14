@@ -25,7 +25,7 @@ $OutputFile = "C:\Temp\BAAS_Telnet_Report.csv"
 
 $TargetConfig = @{
 
-    "SG_DSJ_PROD" = @(
+    "SINGAPORE_DSJ_PROD" = @(
         @{IP="10.208.6.13";Port=1570}
         @{IP="10.208.6.14";Port=1570}
         @{IP="10.208.6.15";Port=1570}
@@ -33,7 +33,7 @@ $TargetConfig = @{
         @{IP="10.208.6.17";Port=1570}
     )
 
-    "SG_DSJ_DEV" = @(
+    "SINGAPORE_DSJ_DEV" = @(
         @{IP="10.200.160.25";Port=1570}
         @{IP="10.200.160.26";Port=1570}
         @{IP="10.200.160.27";Port=1570}
@@ -41,7 +41,7 @@ $TargetConfig = @{
         @{IP="10.200.160.29";Port=1570}
     )
 
-    "SG_DSJ_UAT" = @(
+    "SINGAPORE_DSJ_UAT" = @(
         @{IP="10.202.100.85";Port=1570}
         @{IP="10.202.100.86";Port=1570}
         @{IP="10.202.100.87";Port=1570}
@@ -49,30 +49,30 @@ $TargetConfig = @{
         @{IP="10.202.100.89";Port=1570}
     )
 
-    "SG_KDC_PROD" = @(
+    "SINGAPORE_KDC_PROD" = @(
         @{IP="10.239.132.15";Port=1550}
         @{IP="10.239.132.16";Port=1550}
         @{IP="10.239.132.17";Port=1550}
         @{IP="10.239.132.18";Port=1550}
         @{IP="10.239.132.25";Port=1550}
     )
-    "SG_KDC_DEV"  = @(
+    "SINGAPORE_KDC_DEV"  = @(
         @{IP="10.200.160.32";Port=1570}
         @{IP="10.200.160.33";Port=1570}
         @{IP="10.200.160.34";Port=1570}
     )
-    "SG_KDC_UAT"  = @(
+    "SINGAPORE_KDC_UAT"  = @(
         @{IP="10.202.100.90";Port=1570}
         @{IP="10.202.100.91";Port=1570}
         @{IP="10.202.100.92";Port=1570}
     )
 
-    "SG_9TS_PROD" = @()
-    "SG_9TS_DEV"  = @(
+    "SINGAPORE_9TS_PROD" = @()
+    "SINGAPORE_9TS_DEV"  = @(
         @{IP="10.245.208.15";Port=1550}
         @{IP="10.245.208.16";Port=1550}
     )
-    "SG_9TS_UAT"  = @(
+    "SINGAPORE_9TS_UAT"  = @(
         @{IP="10.245.179.21";Port=1550}
         @{IP="10.245.179.22";Port=1550}
     )
@@ -246,6 +246,14 @@ $TargetConfig = @{
         @{IP="10.202.161.13";Port=1550}
       # @{IP="10.202.161.14";Port=1550}
         @{IP="10.202.161.15";Port=1550}
+    )
+        "US_PIL_DEV"  = @(
+        @{IP="10.200.80.14";Port=1550}
+        @{IP="10.200.80.16";Port=1550}
+        @{IP="10.200.80.19";Port=1550}
+        @{IP="10.200.80.24";Port=1570}
+        @{IP="10.200.80.27";Port=1570}
+        @{IP="10.200.80.28";Port=1570}   
     )
 }
 
